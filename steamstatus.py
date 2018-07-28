@@ -28,35 +28,39 @@ try:
 		state = data['state']
 
 		print 'Current state: ' + str(state)
+		
+		if state != prevstate:
+			
+			# Offline
+			if state == 0:
+				GPIO.output(PIN_R, False)
+				GPIO.output(PIN_G, False)
+				GPIO.output(PIN_B, False)
+			# Online
+			elif state == 1:
+				GPIO.output(PIN_R, False)
+				GPIO.output(PIN_G, True)
+				GPIO.output(PIN_B, False)
+			# Busy
+			elif state == 2:
+				GPIO.output(PIN_R, True)
+				GPIO.output(PIN_G, False)
+				GPIO.output(PIN_B, False)
 
-		# Offline
-		if state == 0:
-			GPIO.output(PIN_R, False)
-			GPIO.output(PIN_G, False)
-			GPIO.output(PIN_B, False)
-		# Online
-		elif state == 1:
-			GPIO.output(PIN_R, False)
-			GPIO.output(PIN_G, True)
-			GPIO.output(PIN_B, False)
-		# Busy
-		elif state == 2:
-			GPIO.output(PIN_R, True)
-			GPIO.output(PIN_G, False)
-			GPIO.output(PIN_B, False)
+			# Away
+			elif state == 3:
+				GPIO.output(PIN_R, False)
+				GPIO.output(PIN_G, False)
+				GPIO.output(PIN_B, True)
 
-		# Away
-		elif state == 3:
-			GPIO.output(PIN_R, False)
-			GPIO.output(PIN_G, False)
-			GPIO.output(PIN_B, True)
-
-		# Other - unnecessary
-		else:
-			GPIO.output(PIN_R, False)
-			GPIO.output(PIN_G, False)
-			GPIO.output(PIN_B, False)
-
+			# Other - unnecessary
+			else:
+				GPIO.output(PIN_R, False)
+				GPIO.output(PIN_G, False)
+				GPIO.output(PIN_B, False)
+				
+		prevstate = state
+			
 		time.sleep(1)
 
 except KeyboardInterrupt:
